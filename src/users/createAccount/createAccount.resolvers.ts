@@ -19,11 +19,14 @@ const resolvers: Resolvers = {
         });
 
         if (existUser) {
-          throw new Error("This username or email already taken.");
+          return {
+            ok: false,
+            error: "User already exist with this email or username",
+          };
         }
 
         const uglyPassword = await bcrypt.hash(password, 10);
-        return client.user.create({
+        await client.user.create({
           data: {
             email,
             username,
@@ -31,8 +34,14 @@ const resolvers: Resolvers = {
             password: uglyPassword,
           },
         });
+        return {
+          ok: true,
+        };
       } catch (error) {
-        console.log(error);
+        return {
+          ok: false,
+          error: "We are sorry, We could not make the account.",
+        };
       }
     },
   },

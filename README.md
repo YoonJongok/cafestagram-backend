@@ -4,5 +4,8 @@ Build cafestagram-backend with typescript, nodejs, graphql, apollo server and po
 
 ### User resolvers
 
-- [] create user
--
+- [x] create user
+- [x] seeProfile
+- [x] Login
+- [x] Edit Profile
+- [x] Change Avatar(Image Upload)

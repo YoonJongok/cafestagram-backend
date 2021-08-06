@@ -6,7 +6,7 @@ export default gql`
     username: String!
     name: String
     location: String
-    avatarURL: String
+    avatar: String
     githubUsername: String
     createdAt: String!
     updatedAt: String!
