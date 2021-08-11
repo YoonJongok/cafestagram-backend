@@ -11,4 +11,6 @@ Build cafestagram-backend with typescript, nodejs, graphql, apollo server and po
 - [x] Change Avatar(Image Upload)
 - [x] Follow User
 - [x] Unfollow User
-- [ ] See followers and See following with Pagination
+- [x] See followers and See following with Pagination
+- [x] Computed Field(isMe, isFollowing, totalFollowers, totalFollowings)
+- [x] Search Users
