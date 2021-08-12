@@ -9,7 +9,7 @@
     "migrate": "npx prisma migrate dev init",
     "studio": "npx prisma studio",
     "build": "babel built --out-dir build",
-    "start": "node build/server"
+    "start": "babel-node build/server"
   },
   "repository": {
     "type": "git",
