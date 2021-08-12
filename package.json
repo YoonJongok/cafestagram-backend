@@ -2,7 +2,9 @@
   "name": "cafestagram",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "dev": "tsc -p",
     "dev:live": "nodemon --watch '*.ts' --exec ts-node src/server.ts --delay 2",
