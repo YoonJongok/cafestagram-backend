@@ -7,7 +7,6 @@
     "npm": "7.20.3"
   },
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "dev": "tsc -p",
     "dev:live": "nodemon --watch '*.ts' --exec ts-node src/server.ts --delay 2",
     "migrate": "npx prisma migrate dev init",
@@ -56,9 +55,5 @@
     "graphql-upload": "^12.0.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0"
-  },
-  "resolutions": {
-    "fs-capacitor": "^7.0.1",
-    "graphql-upload": "^12.0.0"
   }
 }
