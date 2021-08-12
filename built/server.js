@@ -55,7 +55,6 @@ function startApolloServer() {
                     apollo = new apollo_server_express_1.ApolloServer({
                         typeDefs: schema_1.typeDefs,
                         resolvers: schema_1.resolvers,
-                        introspection: true,
                         context: function (_a) {
                             var req = _a.req;
                             return __awaiter(_this, void 0, void 0, function () {
