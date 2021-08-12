@@ -80,7 +80,7 @@ function startApolloServer() {
                     app.use("/static", express.static("uploads"));
                     apollo.applyMiddleware({ app: app });
                     //@ts-ignore
-                    return [4 /*yield*/, new Promise(function (resolve) { return app.listen({ port: 4000 }, resolve); })];
+                    return [4 /*yield*/, new Promise(function (resolve) { return app.listen({ port: PORT }, resolve); })];
                 case 2:
                     //@ts-ignore
                     _a.sent();
