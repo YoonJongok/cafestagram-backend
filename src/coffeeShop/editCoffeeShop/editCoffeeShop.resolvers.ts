@@ -1,4 +1,4 @@
-import { processCategories } from "./../coffeeShop.utils";
+import { handleUpload, processCategories } from "./../coffeeShop.utils";
 import { protectedResolver } from "../../users/users.util";
 import { Resolvers } from "./../../types.d";
 
@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
     editCoffeeShop: protectedResolver(
       async (
         _,
-        { id, latitude, longitude, caption },
+        { id, latitude, longitude, caption, file },
         { loggedInUser, client }
       ) => {
         const old = await client.coffeeShop.findFirst({
@@ -21,6 +21,11 @@ const resolvers: Resolvers = {
                 name: true,
               },
             },
+            photos: {
+              select: {
+                url: true,
+              },
+            },
           },
         });
         if (!old) {
@@ -29,23 +34,47 @@ const resolvers: Resolvers = {
             error: "Coffeeshop not found.",
           };
         }
-        await client.coffeeShop.update({
-          where: {
-            id,
-          },
-          data: {
-            ...(latitude && { latitude }),
-            ...(longitude && { longitude }),
-            categories: {
-              disconnect: old.categories,
-              connectOrCreate: processCategories(caption),
+        try {
+          await client.coffeeShop.update({
+            where: {
+              id,
             },
-          },
-        });
+            data: {
+              ...(latitude && { latitude }),
+              ...(longitude && { longitude }),
+              ...(caption && {
+                categories: {
+                  disconnect: old.categories,
+                  connectOrCreate: processCategories(caption),
+                },
+              }),
+            },
+          });
 
-        return {
-          ok: true,
-        };
+          let photoUrl: string = null;
+          if (file) {
+            photoUrl = await handleUpload(file, loggedInUser.id);
+            await client.coffeeShopPhoto.create({
+              data: {
+                url: photoUrl,
+                shop: {
+                  connect: {
+                    id,
+                  },
+                },
+              },
+            });
+          }
+
+          return {
+            ok: true,
+          };
+        } catch (error) {
+          return {
+            ok: false,
+            error,
+          };
+        }
       }
     ),
   },

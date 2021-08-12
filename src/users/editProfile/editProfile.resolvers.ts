@@ -1,5 +1,5 @@
+import { handleUpload } from "./../../coffeeShop/coffeeShop.utils";
 import * as bcrypt from "bcrypt";
-import * as fs from "fs";
 import { GraphQLUpload } from "graphql-upload";
 import { protectedResolver } from "../users.util";
 import { Resolvers } from "./../../types.d";
@@ -25,14 +25,7 @@ const resolvers: Resolvers = {
         let avatarUrl = null;
 
         if (avatar) {
-          const { filename, createReadStream } = await avatar;
-          const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
-          const readStream = createReadStream();
-          const writeStream = fs.createWriteStream(
-            process.cwd() + "/uploads/" + newFilename
-          );
-          readStream.pipe(writeStream);
-          avatarUrl = `http://localhost:4000/static/${newFilename}`;
+          avatarUrl = await handleUpload(avatar, loggedInUser.id);
         }
 
         let uglyPassword = null;
